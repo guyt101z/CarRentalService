@@ -57,12 +57,83 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Resources\Android\drawable-hdpi\icon.png" />
+    <Content Include="App_Resources\Android\drawable-ldpi\icon.png" />
+    <Content Include="App_Resources\Android\drawable-mdpi\icon.png" />
+    <Content Include="App_Resources\Android\drawable-nodpi\splashscreen.9.png" />
+    <Content Include="App_Resources\iOS\Default%402x.png" />
+    <Content Include="App_Resources\iOS\Default-568h%402x.png" />
+    <Content Include="App_Resources\iOS\Default-Landscape%402x.png" />
+    <Content Include="App_Resources\iOS\Default-Landscape.png" />
+    <Content Include="App_Resources\iOS\Default-Portrait%402x.png" />
+    <Content Include="App_Resources\iOS\Default-Portrait.png" />
+    <Content Include="App_Resources\iOS\Default.png" />
+    <Content Include="App_Resources\iOS\icon%402x.png" />
+    <Content Include="App_Resources\iOS\icon-40%402x.png" />
+    <Content Include="App_Resources\iOS\icon-40.png" />
+    <Content Include="App_Resources\iOS\icon-60%402x.png" />
+    <Content Include="App_Resources\iOS\icon-60.png" />
+    <Content Include="App_Resources\iOS\icon-72%402x.png" />
+    <Content Include="App_Resources\iOS\icon-72.png" />
+    <Content Include="App_Resources\iOS\icon-76%402x.png" />
+    <Content Include="App_Resources\iOS\icon-76.png" />
+    <Content Include="App_Resources\iOS\Icon-Small%402x.png" />
+    <Content Include="App_Resources\iOS\Icon-Small-50%402x.png" />
+    <Content Include="App_Resources\iOS\Icon-Small-50.png" />
+    <Content Include="App_Resources\iOS\Icon-Small.png" />
+    <Content Include="App_Resources\iOS\icon.png" />
+    <Content Include="cordova.android.js" />
+    <Content Include="cordova.ios.js" />
+    <Content Include="images\audi_a3.jpg" />
+    <Content Include="images\audi_a5.jpg" />
+    <Content Include="images\audi_a8.jpg" />
+    <Content Include="images\bmv_m3.jpg" />
+    <Content Include="images\mercedes_c.jpg" />
+    <Content Include="images\mercedes_cl.jpg" />
+    <Content Include="images\mercedes_s.jpg" />
+    <Content Include="images\opel_astra.jpg" />
+    <Content Include="images\opel_insignia.jpg" />
+    <Content Include="index.html" />
+    <Content Include="kendo\js\jquery.min.js" />
+    <Content Include="kendo\js\kendo.mobile.min.js" />
+    <Content Include="kendo\styles\images\back.png" />
+    <Content Include="kendo\styles\images\wp8_icons.png" />
+    <Content Include="kendo\styles\images\wp8_inverseicons.png" />
+    <Content Include="kendo\styles\kendo.mobile.all.min.css" />
+    <Content Include="Plugins\com.phonegap.plugins.sqlite-0.0.4\plugin.xml" />
+    <Content Include="Plugins\com.phonegap.plugins.sqlite-0.0.4\src\android\org\pgsqlite\SQLitePlugin.java" />
+    <Content Include="Plugins\com.phonegap.plugins.sqlite-0.0.4\src\ios\SQLitePlugin.h" />
+    <Content Include="Plugins\com.phonegap.plugins.sqlite-0.0.4\www\SQLitePlugin.android.js" />
+    <Content Include="Plugins\com.phonegap.plugins.sqlite-0.0.4\www\SQLitePlugin.ios.js" />
+    <Content Include="scripts\about.js" />
+    <Content Include="scripts\app.js" />
+    <Content Include="scripts\contact.js" />
+    <Content Include="scripts\home.js" />
+    <Content Include="styles\images\icenium.png" />
+    <Content Include="styles\images\icenium2x.png" />
+    <Content Include="styles\images\location.png" />
+    <Content Include="styles\images\location2x.png" />
+    <Content Include="styles\images\location_active.png" />
+    <Content Include="styles\images\location_active2x.png" />
+    <Content Include="styles\images\logo.png" />
+    <Content Include="styles\images\logo2x.png" />
+    <Content Include="styles\images\search.png" />
+    <Content Include="styles\images\search2x.png" />
+    <Content Include="styles\images\search_active.png" />
+    <Content Include="styles\images\search_active2x.png" />
+    <Content Include="styles\images\sprite-weather.png" />
+    <Content Include="styles\images\sprite-weather2x.png" />
+    <Content Include="styles\main.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\cars.json" />
+    <Content Include="kendo\styles\images\KendoUI.ttf" />
+    <Content Include="kendo\styles\images\KendoUI.woff" />
+    <Content Include="Plugins\com.phonegap.plugins.sqlite-0.0.4\src\ios\SQLitePlugin.m" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
