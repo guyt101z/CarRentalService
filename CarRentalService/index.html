@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Car Rental Service</title>
+        <meta charset="utf-8" />
+        <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+        <link href="styles/main.css" rel="stylesheet" />
+
+        <script src="cordova.js"></script>
+        <script src="kendo/js/jquery.min.js"></script>
+        <script src="kendo/js/kendo.mobile.min.js"></script>
+
+        <script src="scripts/home.js"></script>
+        <script src="scripts/about.js"></script>
+        <script src="scripts/contact.js"></script>
+        <script src="scripts/app.js"></script>
+
+    </head>
+    <body>
+        <!-- Main HTML -->
+
+        <header>
+            <h1>
+                Car Rental Service
+            </h1>
+        </header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#/home" id="home">Home</a>
+                </li>
+                <li>
+                    <a href="#/about" id="about">About Us</a>
+                </li>
+                <li>
+                    <a href="#/contacts" id="contacts">Contacts</a>
+                </li>
+            </ul>
+        </nav>
+        <section>
+            <div id="application">
+
+            </div>
+        </section>
+        
+        <!-- Templates -->
+        <script type="text/kendo-tmpl" id="main-layout">
+            <div id="content">
+            </div>
+        </script>
+
+        <script type="text/kendo-tmpl" id="home-layout">
+             <ul data-bind='source: cars' data-template='car-list-template'></ul>
+        </script>
+
+        <script type="text/kendo-tmpl" id="car-list-template">
+            <li>
+                <a href="\#/cars/#= id #">#: make # #: model #</a>
+            </li>
+        </script>
+
+        <script type="text/kendo-tmpl" id="car-details-template">
+            <div>
+                <img data-bind="attr: { src: car.image, alt: car.model, title: car.model }" />
+                <div><strong>Make: </strong><span data-bind="text: car.make"></span></div>
+                <div><strong>Model: </strong><span data-bind="text: car.model"></span></div>
+                <div><strong>Year: </strong><span data-bind="text: car.year"></span></div>
+                <div><strong>Power: </strong><span data-bind="text: car.power"></span></div>
+            </div>
+        </script>
+        
+        <script type="text/kendo-tmpl" id="about-us-layout">
+            Rent some nice cars with us on fair prices!
+        </script>
+
+        <script type="text/kendo-tmpl" id="contact-layout">
+            <ul>
+                <li>
+                    Car Rental Service Phone: 555-CAR-RENTAL-666
+                </li>
+                <li>
+                    Car Rental Service Address: California
+                </li>
+                <li>
+                    Car Rental Service email: car_rental_service@carrentalservice.crs
+                </li>
+            </ul>
+        </script>
+        
+        <!-- Kendo SPA-->
+        <script>
+            $("nav > ul").kendoMenu({ orientation: "horizontal" });
+
+            //view model of car liste
+            var carListViewModel = new kendo.observable({
+                model: carsDataSource,
+                cars: function () {
+                    var data;
+                    var self = this;
+
+                    this.model.fetch(function () {
+                        data = self.model.data();
+                    });
+
+                    var carList = [];
+
+                    for (var i = 0; i < data.length; i++) {
+                        carList.push({
+                            id: i + 1,
+                            manufactorer: data[i].manufactorer,
+                            model: data[i].model
+                        });
+                    }
+
+                    return carList;
+                }
+            });
+
+            //view model of car details
+            var carDetail = new kendo.observable({
+                model: carsDataSource,
+                current: 1,
+                getCar: function () {
+                    var data;
+                    var self = this;
+
+                    this.model.fetch(function () {
+                        data = self.model.data();
+                    });
+
+                    var car = data[this.get("current")];
+
+                    return car;
+                },
+                car: null,
+            });
+
+            //layouts
+            var layout = new kendo.Layout('main-layout');
+
+            //views
+            var homeView = new kendo.View('home-layout');
+            var listCarsView = new kendo.View('available-cars-layout', { model: carListViewModel });
+            var carDetailView = new kendo.View('car-details-template', { model: carDetail });
+            var aboutView = new kendo.View('about-us-layout');
+            var contactView = new kendo.View('contact-layout');
+
+            //nav button
+            $('#home').on('click', function () {
+                layout.showIn('#content', homeView);
+            });
+
+            $('#cars').on('click', function () {
+                layout.showIn('#content', listCarsView);
+            })
+
+            $('#contacts').on('click', function () {
+                layout.showIn('#content', contactView);
+            });
+
+            $('#about').on('click', function () {
+                layout.showIn('#content', aboutView);
+            });
+
+            //routing
+            var router = new kendo.Router({
+                init: function () {
+                    layout.render('#application');
+                }
+            });
+
+            router.route('/', function () {
+                layout.showIn('#content', homeView);
+            });
+
+            router.route('/cars', function () {
+                layout.showIn('#content', listCarsView);
+            });
+
+            router.route('/cars/:id', function (id) {
+                carDetail.set("current", parseInt(id - 1));
+                carDetail.set("car", carDetail.getCar());
+                layout.showIn('#content', carDetailView);
+            });
+
+            router.route('/contacts', function () {
+                layout.showIn('#content', contactView);
+            });
+
+            router.route('/about', function () {
+                layout.showIn('#content', aboutView);
+            });
+
+            $(function () {
+                router.start();
+            });
+        </script>
+        
+        <!--Home-->
+        <div id="tabstrip-home" 
+             data-role="view"  
+             data-title="Home"
+             data-model="app.homeService.viewModel">
+            
+            <div class="view-content">
+            </div>
+        </div>
+
+        <!--About-->
+        <div id="tabstrip-about" 
+             data-role="view"  
+             data-title="About" 
+             data-model="app.aboutService.viewModel">
+
+            <div class="view-content">
+                <div class="logo"></div>
+                <h3 data-bind="invisible: isLoggedIn">Enter your credentials:</h3>
+                <h1 class="welcome" data-bind="visible: isLoggedIn">
+                    Welcome, <span data-bind="text: username"></span>!
+                </h1>
+
+                <ul data-role="listview" data-style="inset" data-bind="invisible: isLoggedIn">
+                    <li>
+                        <label>
+                            Username
+                            <input type="text" data-bind="value: username"/>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Password
+                            <input type="password" data-bind="value: password" />
+                        </label>
+                    </li>
+                </ul>
+
+                <div class="buttonArea">
+                    <a id="login" data-role="button" data-bind="click: onLogin, invisible: isLoggedIn" class="login-button">Login</a>
+                    <a id="logout" data-role="button" data-bind="click: onLogout, visible: isLoggedIn" class="login-button">Logout</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Location-->
+        <div id="tabstrip-location" 
+             data-role="view"  
+             data-title="Location" 
+             data-init="app.locationService.initLocation" 
+             data-show="app.locationService.show" 
+             data-hide="app.locationService.hide" 
+             data-model="app.locationService.viewModel" 
+             data-stretch="true">
+
+            <div id="map-search-wrap">
+                <button id="map-navigate-home" data-bind="click: onNavigateHome"></button>
+                <form onsubmit="return false;">
+                    <input id="map-address" type="search" data-bind="value: address" placeholder="Address"/>
+                    <input id="map-search" type="submit" value="" data-bind="click: onSearchAddress" />
+                </form>
+            </div>
+            <div id="map-canvas"></div>
+
+        </div>
+
+        <!--Weather-->
+        <div id="tabstrip-weather" 
+             data-role="view"  
+             data-title="Weather" 
+             data-model="app.weatherService.viewModel">
+
+            <div class="weather">
+                <h1>20-Day Forecast</h1>
+
+                <div class="separator">
+                    <div class="dark"></div>
+                    <div class="light"></div>
+                </div>
+
+                <ul class="forecast-list" 
+                    data-role="listview" 
+                    data-bind="source: weatherDataSource" 
+                    data-template="weather-forecast-template">
+                </ul>
+            </div>
+        </div>
+
+        <!--Weather forecast template-->
+        <script type="text/x-kendo-tmpl" id="weather-forecast-template">
+            <div>
+                <div class="position-left">
+                    <span class="weather-info date">${day}</span>
+                </div>
+                <div class="position-right">
+                    <span class="weather-info temperature high">${highTemperature}<sup>&deg;</sup></span>
+                    <span class="weather-info temperature low">${lowTemperature}<sup>&deg;</sup></span>
+                </div>
+                <div class="position-center">
+                    <span class="weather-icon ${image}"></span>
+                </div>
+            </div>
+        </script>
+
+        <!--Layout-->
+        <div data-role="layout" data-id="tabstrip-layout" >
+
+            <!--Header-->
+            <div data-role="header">
+                <div data-role="navbar">
+                    <span data-role="view-title"></span>
+                </div>
+            </div>
+
+            <!--Footer-->
+            <div data-role="footer">
+                <div data-role="tabstrip">
+                    <a href="#tabstrip-home" data-icon="home">Home</a>
+                    <a href="#tabstrip-login" data-icon="contacts">Login</a>
+                    <a href="#tabstrip-location" data-icon="search">Location</a>
+                    <a href="#tabstrip-weather" data-icon="globe">Weather</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
